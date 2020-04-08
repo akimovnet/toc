@@ -1,8 +1,14 @@
 import React from 'react';
+import TOC from "./TOC";
+import {TOCProvider} from "./TOCProvider";
 
 function App() {
   return (
-    <div className="App"></div>
+    <div className="App">
+      <TOCProvider>
+        <TOC />
+      </TOCProvider>
+    </div>
   );
 }
 
