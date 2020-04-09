@@ -1,0 +1,67 @@
+/* The class for elements with out-of-bounds background. It increases padding, keeping element width and position. */
+.fullWindowWidth {
+    padding-left: 248px; /* to cover all cases where the element can be positioned, this code uses the sum of the top
+parent's width 216px and its left padding 32px */
+    margin-left: -248px;
+    padding-right: 32px; /* the value is equal to the top parent's right padding */
+    margin-right: -32px;
+}
+.heading {
+    composes: fullWindowWidth;
+    transition: background-color 0.2s;
+}
+.heading.selected.hasAnchors {
+    background-color: #f4f4f4;
+}
+.titleWrapper {
+    position: relative;
+}
+.hasChildren .titleWrapper:before {
+    content: "";
+    border-color: transparent #000000;
+    border-style: solid;
+    border-width: 3px 0 3px 4px;
+    height: 0;
+    width: 0;
+    display: block;
+    position: absolute;
+    top: 12px;
+    left: -9px;
+    transition: transform 0.2s;
+}
+.hasChildren.expanded .titleWrapper:before {
+    transform: rotate(90deg);
+}
+.title {
+    composes: fullWindowWidth;
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.title:hover {
+    background-color: #f4f5f5;
+}
+.selected .title {
+    font-weight: bold;
+}
+.anchors {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.anchor {
+    composes: fullWindowWidth;
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-decoration: none;
+    color: #000000;
+    transition: background-color 0.2s;
+}
+.anchor:hover {
+    background-color: #eaebeb;
+}
