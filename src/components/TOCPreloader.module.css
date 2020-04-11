@@ -1,0 +1,27 @@
+.container {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.container li {
+    background-color: #f4f4f4;
+    height: 16px;
+    margin-bottom: 16px;
+}
+.item1,
+.item3 {
+    margin-left: 14px;
+    margin-right: 25px;
+}
+.item2 {
+    margin-left: 14px;
+}
+.item4,
+.item6 {
+    margin-left: 30px;
+}
+.item5,
+.item7 {
+    margin-left: 30px;
+    margin-right: 25px;
+}

@@ -1,4 +1,5 @@
 import React, {useContext} from "react";
+import TOCPreloader from "./TOCPreloader";
 import TOCList from "./TOCList";
 import {TOCStateContext} from "./TOCProvider";
 import styles from "./TOC.module.css";
@@ -10,7 +11,7 @@ function TOC() {
       {error
         ? <div>{error.message}</div>
         : !isLoaded
-          ? <div>Loading</div>
+          ? <TOCPreloader />
           : <TOCList ids={topLevelIds} />
       }
     </div>
