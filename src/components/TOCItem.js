@@ -12,9 +12,15 @@ function TOCItem({id, title, url, pages, anchors}) {
   const hasChildren = pages && pages.length > 0;
   const hasAnchors = anchors && anchors.length > 0;
 
-  function handleClick(event) {
+  function handleTitleClick(event) {
     event.preventDefault();
-    dispatch({ type: 'SELECT_PAGE', id });
+    if (!isSelected) {
+      dispatch({ type: 'SELECT_PAGE', id });
+      dispatch({ type: 'EXPAND', id });
+    }
+  }
+
+  function handleToggleChildrenClick() {
     if (isExpanded) {
       dispatch({ type: 'COLLAPSE', id });
     } else {
@@ -28,15 +34,15 @@ function TOCItem({id, title, url, pages, anchors}) {
                       + (isSelected? ` ${styles.selected}` : '')
                       + (isExpanded? ` ${styles.expanded}` : '')
                       + (hasAnchors? ` ${styles.hasAnchors}` : '')}>
-        <div className={styles.titleWrapper} onClick={handleClick}>
+        <div className={styles.titleWrapper}>
           {hasChildren &&
-            <div className={styles.toggleChildren}>
+            <div className={styles.toggleChildren} onClick={handleToggleChildrenClick}>
               <div className={styles.toggleChildrenIcon}></div>
             </div>
           }
           {url
-            ? <a className={styles.title} href={url}>{title}</a>
-            : <span className={styles.title}>{title}</span>
+            ? <a className={styles.title} href={url} onClick={handleTitleClick}>{title}</a>
+            : <span className={styles.title} onClick={handleTitleClick}>{title}</span>
           }
         </div>
         {isSelected && hasAnchors &&
