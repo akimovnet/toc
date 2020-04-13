@@ -16,20 +16,21 @@ parent's width 216px and its left padding 32px */
 .titleWrapper {
     position: relative;
 }
-.hasChildren .titleWrapper:before {
+.toggleChildren {
+    position: absolute;
+    top: 8px;
+    left: -13px;
+    padding: 4px;
+    cursor: pointer;
+}
+.toggleChildrenIcon {
     content: "";
     border-color: transparent #000000;
     border-style: solid;
     border-width: 3px 0 3px 4px;
-    height: 0;
-    width: 0;
-    display: block;
-    position: absolute;
-    top: 12px;
-    left: -9px;
     transition: transform 0.2s;
 }
-.hasChildren.expanded .titleWrapper:before {
+.expanded .toggleChildrenIcon {
     transform: rotate(90deg);
 }
 .title {

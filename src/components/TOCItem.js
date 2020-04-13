@@ -27,9 +27,13 @@ function TOCItem({id, title, url, pages, anchors}) {
       <div className={styles.heading
                       + (isSelected? ` ${styles.selected}` : '')
                       + (isExpanded? ` ${styles.expanded}` : '')
-                      + (hasChildren? ` ${styles.hasChildren}` : '')
                       + (hasAnchors? ` ${styles.hasAnchors}` : '')}>
         <div className={styles.titleWrapper} onClick={handleClick}>
+          {hasChildren &&
+            <div className={styles.toggleChildren}>
+              <div className={styles.toggleChildrenIcon}></div>
+            </div>
+          }
           {url
             ? <a className={styles.title} href={url}>{title}</a>
             : <span className={styles.title}>{title}</span>
