@@ -1,5 +1,5 @@
 /* The class for elements with out-of-bounds background. It increases padding, keeping element width and position. */
-.fullWindowWidth {
+.outOfBoundsBackground {
     padding-left: 248px; /* to cover all cases where the element can be positioned, this code uses the sum of the top
 parent's width 216px and its left padding 32px */
     margin-left: -248px;
@@ -7,7 +7,7 @@ parent's width 216px and its left padding 32px */
     margin-right: -32px;
 }
 .heading {
-    composes: fullWindowWidth;
+    composes: outOfBoundsBackground;
     transition: background-color 0.2s;
 }
 .heading.selected.hasAnchors {
@@ -34,7 +34,7 @@ parent's width 216px and its left padding 32px */
     transform: rotate(90deg);
 }
 .title {
-    composes: fullWindowWidth;
+    composes: outOfBoundsBackground;
     display: block;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -55,7 +55,7 @@ parent's width 216px and its left padding 32px */
     padding: 0;
 }
 .anchor {
-    composes: fullWindowWidth;
+    composes: outOfBoundsBackground;
     display: block;
     padding-top: 8px;
     padding-bottom: 8px;
