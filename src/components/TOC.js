@@ -1,11 +1,21 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import TOCPreloader from "./TOCPreloader";
 import TOCList from "./TOCList";
-import {TOCStateContext} from "./TOCProvider";
+import {TOCDispatchContext, TOCStateContext} from "./TOCProvider";
 import styles from "./TOC.module.css";
 
-function TOC() {
+function TOC({id}) {
   const { error, isLoaded, topLevelIds } = useContext(TOCStateContext);
+  const dispatch = useContext(TOCDispatchContext);
+
+  useEffect(() => {
+    if (isLoaded && id) {
+      dispatch({ type: 'EXPAND_ANCESTORS', id });
+      dispatch({ type: 'SELECT_PAGE', id });
+      dispatch({ type: 'EXPAND', id });
+    }
+  }, [isLoaded, id, dispatch]);
+
   return (
     <div className={styles.container}>
       {error

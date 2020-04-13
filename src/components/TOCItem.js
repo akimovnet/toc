@@ -1,22 +1,25 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import TOCList from "./TOCList";
 import {TOCDispatchContext, TOCStateContext} from "./TOCProvider";
 import styles from "./TOCItem.module.css";
 
 function TOCItem({id, title, url, pages, anchors}) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const dispatch = useContext(TOCDispatchContext);
   const state = useContext(TOCStateContext);
 
+  const isExpanded = state.expandedItemIds.includes(id);
   const isSelected = state.selectedItemId === id;
   const hasChildren = pages && pages.length > 0;
   const hasAnchors = anchors && anchors.length > 0;
 
   function handleClick(event) {
     event.preventDefault();
-    setIsExpanded(!isExpanded);
     dispatch({ type: 'SELECT_PAGE', id });
+    if (isExpanded) {
+      dispatch({ type: 'COLLAPSE', id });
+    } else {
+      dispatch({ type: 'EXPAND', id });
+    }
   }
 
   return (

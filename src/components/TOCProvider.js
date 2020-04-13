@@ -1,4 +1,5 @@
 import React, {useEffect, useReducer} from "react";
+import {getAncestorIds, mergeWithoutDuplicates} from "../helpers";
 
 const TOCDispatchContext = React.createContext();
 const TOCStateContext = React.createContext();
@@ -26,6 +27,24 @@ function TOCProvider({children}) {
           ...state,
           selectedItemId: action.id
         };
+      case 'EXPAND':
+        return {
+          ...state,
+          expandedItemIds: [...state.expandedItemIds, action.id]
+        };
+      case 'COLLAPSE':
+        return {
+          ...state,
+          expandedItemIds: state.expandedItemIds.filter(id => id !== action.id)
+        };
+      case 'EXPAND_ANCESTORS':
+        return {
+          ...state,
+          expandedItemIds: mergeWithoutDuplicates(
+            state.expandedItemIds,
+            getAncestorIds(action.id, state.pages,[])
+          )
+        };
       default:
         return state;
     }
@@ -36,6 +55,7 @@ function TOCProvider({children}) {
     pages: [],
     anchor: [],
     topLevelIds: [],
+    expandedItemIds: [],
     selectedItemId: null
   };
   const [state, dispatch] = useReducer(reducer, initialState);
