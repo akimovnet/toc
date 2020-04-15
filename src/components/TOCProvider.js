@@ -72,7 +72,7 @@ function TOCProvider({children}) {
     error: null,
     isLoaded: false,
     pages: [],
-    anchor: [],
+    anchors: [],
     topLevelIds: [],
     expandedItemIds: [],
     matchedIds: [],
