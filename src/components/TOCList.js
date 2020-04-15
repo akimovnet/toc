@@ -4,11 +4,11 @@ import {TOCStateContext} from "./TOCProvider";
 import styles from "./TOCList.module.css";
 
 function TOCList({ids}) {
-  const { pages } = useContext(TOCStateContext);
+  const { pages, searchString, filteredIds } = useContext(TOCStateContext);
 
   return (
     <ul className={styles.container}>
-      {ids.map(id =>
+      {ids.filter(id => searchString === '' || filteredIds.includes(id)).map(id =>
         <TOCItem key={id} {...pages[id]} />
       )}
     </ul>

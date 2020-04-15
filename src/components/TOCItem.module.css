@@ -49,6 +49,9 @@ parent's width 216px and its left padding 32px */
 .selected .title {
     font-weight: bold;
 }
+.highlighted {
+    background-color: khaki;
+}
 .anchors {
     list-style-type: none;
     margin: 0;

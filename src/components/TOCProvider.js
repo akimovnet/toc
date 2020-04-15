@@ -1,5 +1,11 @@
 import React, {useEffect, useReducer} from "react";
-import {getAncestorIds, mergeWithoutDuplicates} from "../helpers";
+import {
+  getAncestorIds,
+  getAncestorIdsByList,
+  getDescendantIdsByList,
+  getMatchedItemIds,
+  mergeWithoutDuplicates
+} from "../helpers";
 
 const TOCDispatchContext = React.createContext();
 const TOCStateContext = React.createContext();
@@ -45,6 +51,19 @@ function TOCProvider({children}) {
             getAncestorIds(action.id, state.pages,[])
           )
         };
+      case 'FILTER':
+        const matchedIds = getMatchedItemIds(action.searchString, state.pages);
+        const matchedAncestorIds = getAncestorIdsByList(matchedIds, state.pages);
+        return {
+          ...state,
+          matchedIds,
+          searchString: action.searchString,
+          expandedItemIds: matchedAncestorIds,
+          filteredIds: mergeWithoutDuplicates(
+            getDescendantIdsByList(matchedIds, state.pages),
+            mergeWithoutDuplicates(matchedIds, matchedAncestorIds)
+          )
+        };
       default:
         return state;
     }
@@ -56,6 +75,9 @@ function TOCProvider({children}) {
     anchor: [],
     topLevelIds: [],
     expandedItemIds: [],
+    matchedIds: [],
+    filteredIds: [],
+    searchString: '',
     selectedItemId: null
   };
   const [state, dispatch] = useReducer(reducer, initialState);

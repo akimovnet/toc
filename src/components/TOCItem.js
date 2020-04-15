@@ -9,8 +9,19 @@ function TOCItem({id, title, url, pages, anchors}) {
 
   const isExpanded = state.expandedItemIds.includes(id);
   const isSelected = state.selectedItemId === id;
+  const isMatched = state.matchedIds.includes(id);
   const hasChildren = pages && pages.length > 0;
   const hasAnchors = anchors && anchors.length > 0;
+
+  const titleWithHighlightedMatch = isMatched
+    ? title
+        .split(new RegExp(`(${state.searchString})`, 'gi'))
+        .map((part, index) =>
+          index % 2 === 1
+            ? <span className={styles.highlighted} key={index}>{part}</span>
+            : part
+        )
+    : title;
 
   function handleTitleClick(event) {
     event.preventDefault();
@@ -41,8 +52,8 @@ function TOCItem({id, title, url, pages, anchors}) {
             </div>
           }
           {url
-            ? <a className={styles.title} href={url} onClick={handleTitleClick}>{title}</a>
-            : <span className={styles.title} onClick={handleTitleClick}>{title}</span>
+            ? <a className={styles.title} href={url} onClick={handleTitleClick}>{titleWithHighlightedMatch}</a>
+            : <span className={styles.title} onClick={handleTitleClick}>{titleWithHighlightedMatch}</span>
           }
         </div>
         {isSelected && hasAnchors &&
