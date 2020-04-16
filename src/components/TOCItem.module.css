@@ -69,3 +69,7 @@ parent's width 216px and its left padding 32px */
 .anchor:hover {
     background-color: #eaebeb;
 }
+.children {
+    composes: outOfBoundsBackground;
+    overflow-y: hidden;
+}

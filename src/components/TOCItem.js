@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useRef} from "react";
 import TOCList from "./TOCList";
 import {TOCDispatchContext, TOCStateContext} from "./TOCProvider";
 import styles from "./TOCItem.module.css";
@@ -6,6 +6,7 @@ import styles from "./TOCItem.module.css";
 function TOCItem({id, title, url, pages, anchors}) {
   const dispatch = useContext(TOCDispatchContext);
   const state = useContext(TOCStateContext);
+  const childrenRef = useRef(null);
 
   const isExpanded = state.expandedItemIds.includes(id);
   const isSelected = state.selectedItemId === id;
@@ -23,19 +24,39 @@ function TOCItem({id, title, url, pages, anchors}) {
         )
     : title;
 
+  async function expandWithAnimation() {
+    await dispatch({ type: 'EXPAND', id });
+    childrenRef.current.animate(
+      { height: [0, childrenRef.current.clientHeight + 'px'] },
+      { duration: 200, easing: 'ease' }
+    );
+  }
+
+  function collapseWithAnimation() {
+    setTimeout(() => {
+      dispatch({ type: 'COLLAPSE', id });
+    }, 200);
+    childrenRef.current.animate(
+      { height: [childrenRef.current.clientHeight + 'px', 0] },
+      { duration: 200, easing: 'ease', fill: 'forwards' }
+    );
+  }
+
   function handleTitleClick(event) {
     event.preventDefault();
     if (!isSelected) {
       dispatch({ type: 'SELECT_PAGE', id });
-      dispatch({ type: 'EXPAND', id });
+    }
+    if (hasChildren && !isExpanded) {
+      expandWithAnimation();
     }
   }
 
   function handleToggleChildrenClick() {
     if (isExpanded) {
-      dispatch({ type: 'COLLAPSE', id });
+      collapseWithAnimation();
     } else {
-      dispatch({ type: 'EXPAND', id });
+      expandWithAnimation();
     }
   }
 
@@ -71,7 +92,9 @@ function TOCItem({id, title, url, pages, anchors}) {
         }
       </div>
       {isExpanded && hasChildren &&
-        <TOCList ids={pages} />
+        <div ref={childrenRef} className={styles.children}>
+          <TOCList ids={pages} />
+        </div>
       }
     </li>
   );
