@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    margin-bottom: 12px;
+    position: relative;
+}
+.filter {
+    width: 100%;
+    border: 1px solid gray;
+    padding: 4px 15px;
+}
+.waitingIcon {
+    width: 9px;
+    height: 9px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    border-top-color: white;
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    animation: spin 1s infinite linear;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

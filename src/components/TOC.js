@@ -3,6 +3,7 @@ import TOCPreloader from "./TOCPreloader";
 import TOCList from "./TOCList";
 import {TOCDispatchContext, TOCStateContext} from "./TOCProvider";
 import styles from "./TOC.module.css";
+import TOCFilter from "./TOCFilter";
 
 function TOC({id, searchString}) {
   const { error, isLoaded, topLevelIds } = useContext(TOCStateContext);
@@ -28,7 +29,10 @@ function TOC({id, searchString}) {
         ? <div>{error.message}</div>
         : !isLoaded
           ? <TOCPreloader />
-          : <TOCList ids={topLevelIds} />
+          : <>
+              <TOCFilter />
+              <TOCList ids={topLevelIds} />
+            </>
       }
     </div>
   );
