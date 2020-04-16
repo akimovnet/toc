@@ -64,6 +64,14 @@ function TOCProvider({children}) {
             mergeWithoutDuplicates(matchedIds, matchedAncestorIds)
           )
         };
+      case 'RESTORE':
+        return {
+          ...state,
+          searchString: '',
+          matchedIds: [],
+          filteredIds: [],
+          expandedItemIds: []
+        };
       default:
         return state;
     }
